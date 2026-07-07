@@ -98,12 +98,12 @@ check_config() {
 create_client_config() {
 	echo "#!/usr/bin/env bash" > ./client_config.sh
 	cat <<EOF >> ./client_config.sh
-	HOSTNAME="INSERT_HOST_NAME_HERE"
-	API_KEY="YOUR_GENERATED_UUID_HERE"
-	PARENT_IP="A.B.C.D"
-	TAILSCALE_AUTH_KEY="INSERT_TAILSCALE_AUTH_KEY_HERE"
-	TAILSCALE_API_KEY="INSERT_TAILSCALE_API_KEY_HERE"
-	TAILNET="INSERT_TAILNET_HERE"
+	HOSTNAME=$HOSTNAME
+	API_KEY=$API_KEY
+	PARENT_IP=$PARENT_IP
+	TAILSCALE_AUTH_KEY=$TAILSCALE_AUTH_KEY
+	TAILSCALE_API_KEY=$TAILSCALE_API_KEY
+	TAILNET=$TAILNET
 EOF
 }
 # Installation usage help display
@@ -123,15 +123,6 @@ if [ ! -e ./server_config.sh ] && [ ! -e ./client_config.sh ]; then
 	echo "ERROR: server_config.sh or client_config.sh does not exist. Please create it and place it in this directory"
 	exit 1
 fi
-if [ -e ./server_config.sh ]; then
-	source ./server_config.sh
-fi
-if [ -e ./client_config.sh ]; then
-	source ./client_config.sh
-else
-	create_client_config
-fi
-
 # Initialize variables
 SERVER_MODE=false
 CLIENT_MODE=false
@@ -142,10 +133,22 @@ while getopts "scdhu" opt; do
     case $opt in
         s)
             SERVER_MODE=true
+            if [ -e ./server_config.sh ]; then
+							source ./server_config.sh
+						else
+							echo "Missing server_config.sh."
+							exit 1
+						fi
+						create_client_config
             check_config s
             ;;
         c)
             CLIENT_MODE=true
+            if [ -e ./client_config.sh ]; then
+							source ./client_config.sh
+						else
+							echo "Missing client_config.sh."
+						fi
             check_config c
             ;;
         h)
@@ -233,7 +236,6 @@ sh /tmp/tailscale_install.sh
 sudo tailscale up --auth-key=$TAILSCALE_AUTH_KEY
 # Update configuration file
 if [ "$PARENT_IP" == "A.B.C.D" ]; then
-	#TAILSCALE_IP=`/usr/bin/tailscale status | grep $HOSTNAME | cut -d' ' -f1`
 	TAILSCALE_IP=$(/usr/bin/tailscale ip -4)
 	sed -i 's/PARENT_IP=\"A.B.C.D\"/PARENT_IP=\"'$TAILSCALE_IP'\"/g' ./client_config.sh
 fi
