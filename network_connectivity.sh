@@ -58,6 +58,8 @@ fi
 
 echo
 
+echo "Tailscale IP Address: "$(/usr/bin/tailscale ip -4)
+
 echo "Gateway IP Address:"
 gateway_ip=$(get_gateway)
 if [ -n "$gateway_ip" ]; then

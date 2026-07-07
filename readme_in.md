@@ -1,4 +1,4 @@
-# Tailscale Multi-Datacenter Network Mesh Demonstration
+# Tailscale Multi-Datacenter Network Demonstration
 
 ## Overview
 
@@ -119,6 +119,8 @@ PARENT_IP="A.B.C.D"
 Create a new machine using the `Lab_Image_Ubuntu_26_04_LTS.ova`
 https://drive.google.com/file/d/1fhGBCAeDdqW8C5ZDeGK-Ua_wEUmmoj0o/view?usp=drive_link
 
+MD5SUM: f429417ee18d7ede0f867a63e31812b9
+
 #### PARENT CONFIGURATION
 
 1. **Selection Creation Type**
@@ -149,6 +151,8 @@ https://drive.google.com/file/d/1fhGBCAeDdqW8C5ZDeGK-Ua_wEUmmoj0o/view?usp=drive
 
 Create a new machine using the `Lab_Image_Ubuntu_26_04_LTS.ova`
 https://drive.google.com/file/d/1fhGBCAeDdqW8C5ZDeGK-Ua_wEUmmoj0o/view?usp=drive_link
+
+MD5SUM: f429417ee18d7ede0f867a63e31812b9
 
 1. **Selection Creation Type**
    - Deploy a virtual machine from an OVF or OVA File
