@@ -26,9 +26,98 @@ I chose this specific use case because it validates Tailscale's effectiveness in
 
 ## Setup and Deployment Instructions
 
-### ESXi Installation
+A pdf version with screen shots of the Setup and Deployment Instructions can be found here: 
+https://github.com/gnazarey/tailscale_exercise/blob/main/Setup_and_Deployment_Instructions.pdf
+
+The installation process is divided into two distinct phases:
+
+## Phase 1: Tailscale Configuration
+This phase involves generating necessary authentication keys and gathering required information for the virtual machine installation. Key activities include:
+- Generating Tailscale authentication keys
+- Creating API access tokens for uninstall functionality
+- Collecting Tailnet DNS name information
+
+## Phase 2: Virtual Machine Installation
+This phase consists of two installation components:
+- **Parent Server Installation**: Primary server setup
+- **Client Server Installations**: Multiple client installations
+
+Both phases must be completed sequentially for successful deployment.
+
+# Tailscale Configuration
+
+## Generate an Auth Key
+This will get copied to the config file during the Parent and Client server setup.
+
+1. Login to your Tailscale account.
+2. Click on the **Add Device** pull-down on the right side of the screen.
+3. Select **Linux Server**.
+4. Under *Set up device*:
+   - Tags: On, and fill in a tag name
+   - Ephemeral: On
+   - Use as exit node: Off
+5. Under *Set up authentication key*:
+   - Reusable: On
+   - Expires in: 7 days
+6. Click **Generate install script**.
+7. Copy the script to Notepad.
+
+## Generate an API Key
+This is needed for the uninstall process.
+
+1. Login to your Tailscale account.
+2. Click on **Settings** on the right of the top menu.
+3. Click on **Keys** under the *Personal Setting* menu item on the left of the screen.
+4. Click on **Generate access token** which is to the right of the *API access tokens* header in the middle of the screen.
+5. Provide a description for the access token and keep the default **90 days** under Expiration.
+6. Click **Generate access token**.
+7. Copy the generated token to Notepad.
+
+## Gather the Tailnet DNS Name
+
+1. Login to your Tailscale account.
+2. Click on **DNS** on the top menu.
+3. The first item under DNS is *Tailnet DNS Name*. Copy it to Notepad.
+
+## Editing the `server_config.sh` File
+
+Here is the default content of `server_config.sh`:
+
+```bash
+##########################
+# User Configuration 
+##########################
+HOSTNAME="INSERT_HOST_NAME_HERE"
+TAILSCALE_AUTH_KEY="INSERT_TAILSCALE_AUTH_KEY_HERE"
+# Only need these if you wish to use the uninstall functionality
+TAILSCALE_API_KEY="INSERT_TAILSCALE_API_KEY_HERE"
+TAILNET="INSERT_TAILNET_HERE"
+
+##########################
+# Script Generated
+##########################
+API_KEY="YOUR_GENERATED_UUID_HERE"
+PARENT_IP="A.B.C.D"
+```
+
+### Configuration Notes:
+
+1. **Hostname** must be unique for each host.
+2. **TAILSCALE_AUTH_KEY**: Taken from the installation script created in *Generate a Auth Key*.  
+   - Format: `tskey-auth-0123456789ABCDEFG-HIJKLMNOPQRSTUVWXYZ0123456789abc`  
+   - Include the entire key including `tskey-auth-`.
+3. **TAILSCALE_API_KEY**: Copied from *Generate an API Key*.  
+   - Format: `tskey-api-0123456789ABCDEFG-HIJKLMNOPQRSTUVWXYZ0123456789abc`  
+   - Include the entire key including `tskey-api-`.
+4. **TAILNET**: The Tailnet DNS Name obtained from *Gather the Tailnet DNS Name*.
+
+--- 
+
+
+### Virtual Machine Installation
 
 Create a new machine using the `Lab_Image_Ubuntu_26_04_LTS.ova`
+https://drive.google.com/file/d/1fhGBCAeDdqW8C5ZDeGK-Ua_wEUmmoj0o/view?usp=drive_link
 
 #### PARENT CONFIGURATION
 
@@ -59,6 +148,7 @@ Create a new machine using the `Lab_Image_Ubuntu_26_04_LTS.ova`
 ### CLIENT CONFIGURATION
 
 Create a new machine using the `Lab_Image_Ubuntu_26_04_LTS.ova`
+https://drive.google.com/file/d/1fhGBCAeDdqW8C5ZDeGK-Ua_wEUmmoj0o/view?usp=drive_link
 
 1. **Selection Creation Type**
    - Deploy a virtual machine from an OVF or OVA File
@@ -86,14 +176,32 @@ Create a new machine using the `Lab_Image_Ubuntu_26_04_LTS.ova`
 
 Repeat the above steps for each remote data location.
 
-### User Accounts
+### User Accounts Information
 ```
 labuser     D0ntT311@ny0n3 - user has sudo privileges
 ```
 
-Wait until the OVA file has been uploaded. The status can be monitored in the recent task area.
-Once Import VAPP and Upload disk - `Lab_Image_Ubuntu_26_04_LTS-disk1.vmdk` have completed, power the VM on.
-Since SSHD is running you can SSH to the host. You can get the IP information under the General Information Networking.
+# VM Boot and Configuration
+
+## Power On Instructions
+
+Once all virtual machines have completed their installation process, power them on.
+
+## Network Information Gathering
+
+VM Tools are pre-installed on each image, enabling network information collection after boot-up and DHCP address assignment. Each VM will automatically obtain its network configuration upon startup.
+
+## Remote Access
+
+SSH is enabled on all images, allowing remote access to each VM using its assigned IP address for continued configuration tasks.
+
+## Recommended Workflow
+
+1. Power on all virtual machines
+2. Wait for system boot and network initialization
+3. Collect IP addresses from VM Tools or DHCP leases
+4. Establish SSH connections using the assigned IP addresses
+5. Proceed with additional configuration steps
 
 ### Install Files
 
@@ -169,12 +277,12 @@ To confirm that the application layer is successfully recognizing connected host
 
 Please note that the following assumptions and prerequisites were utilized in the development of this plan/design:
 
-### I. Platform and Access Requirements (Prerequisites)
+### 1. Platform and Access Requirements (Prerequisites)
 - **Networking Solution**: The user must possess an existing Tailscale account, or be capable of establishing one immediately upon project commencement.
 - **Virtualization Environment**: Operational access to a Virtual Machine (VM) platform is required that supports the deployment of OVA images.
 - **Connectivity**: All deployed virtual machines must maintain reliable outbound internet connectivity.
 
-### II. Resource and Infrastructure Assumptions
+### 2. Resource and Infrastructure Assumptions
 The following specifications are assumed for all deployment locations:
 
 - **Operating System**: Ubuntu Linux 26.04 LTS
