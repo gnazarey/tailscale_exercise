@@ -225,7 +225,7 @@ Edit `server_config.sh` with your favorite editor:
 - Change HOSTNAME to `server`
 - Change TAILSCALE_AUTH_KEY to the key created
 
-Run this command: `bash install.sh -u`
+Run this command: `bash install.sh -s`
 
 When the script has completed, make sure to copy the `client_config.sh` to the client machines.
 
