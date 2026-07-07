@@ -119,7 +119,7 @@ install_usage() {
 # Installation Program
 ################
 # Check for configuration file
-if [ ! -e ./server_config.sh ] || [ ! -e ./client_config.sh ]; then
+if [ ! -e ./server_config.sh ] && [ ! -e ./client_config.sh ]; then
 	echo "ERROR: server_config.sh or client_config.sh does not exist. Please create it and place it in this directory"
 	exit 1
 fi
