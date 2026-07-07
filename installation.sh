@@ -107,7 +107,6 @@ sudo systemctl restart netdata
 /usr/bin/wget -O /tmp/tailscale_install.sh https://tailscale.com/install.sh
 sh /tmp/tailscale_install.sh
 sudo tailscale up --auth-key=$TAILSCALE_AUTH_KEY
-#tskey-auth-k6rMu9R7xy11CNTRL-e4skXgifLFfxNnQyKmU3GfaMv8mknAax
 # Update configuration file
 if [ "$PARENT_IP" == "A.B.C.D" ]; then
 	#TAILSCALE_IP=`/usr/bin/tailscale status | grep $HOSTNAME | cut -d' ' -f1`
