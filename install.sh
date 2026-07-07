@@ -2,7 +2,7 @@
 # This is the installation script for netdata and tailscale
 # Written By: George Nazarey
 # Date: 7/02/2026
-# Email: gnazarey@gmail.com
+# Email: gnazarey@gmail.com 
 #
 ##########################
 # FUNCTION SECTION
