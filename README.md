@@ -59,6 +59,37 @@ PARENT CONFIGURATION
 	- There will be an error message that pop-up. Ignore it for now.
 	- Click Finish
 
+# ESXi Installation
+
+## Create a new machine using the Lab_Image_Ubuntu_26_04_LTS.ova
+
+### PARENT CONFIGURATION
+
+1. **Selection Creation Type**
+   - Deploy a virtual machine from an OVF or OVA File
+   - Click Next
+
+2. **Select OVF and VMDK files**
+   - Name the virtual machine - `parent_server`
+   - Select and copy the OVA to the ESXi
+   - Click Next
+
+3. **Select Storage**
+   - Select a datastore that has at least 60GB free
+   - Click Next
+
+4. **Deployment options**
+   - Select a network mapping that has internet access
+   - Select Thin disk provisioning
+   - Uncheck Power on Automatically
+   - Click Next
+
+5. **Ready to complete**
+   - Review the configuration to make sure there are no mistakes
+   - There will be an error message that pop-up. Ignore it for now.
+   - Click Finish
+
+
 CLIENT_CONFIGURATION
 Create a new machine using the Lab_Image_Ubuntu_26_04_LTS.ova 
 1. Selection Creation Type
