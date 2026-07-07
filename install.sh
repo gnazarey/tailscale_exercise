@@ -247,10 +247,11 @@ for i in /tmp/stream.conf.$$ /tmp/netdata-kickstart.sh /tmp/tailscale_install.sh
 			rm $i
 		fi
 	done
-echo "****************************"
-echo "Don't forget to copy the client_config.sh to the client machine before running the installation script."
-echo "****************************"
+# Print reminder of client config if run in server mode
 if [ "$SERVER_MODE" = true ]; then
+	echo "****************************"
+	echo "Don't forget to copy the client_config.sh to the client machine before running the installation script."
+	echo "****************************"
 	sed -i 's/TAILSCALE_AUTH_KEY=\"INSERT_TAILSCALE_AUTH_KEY_HERE\"/TAILSCALE_AUTH_KEY=\"'$TAILSCALE_AUTH_KEY'\"/g' ./client_config.sh
 	sed -i 's/TAILSCALE_API_KEY=\"INSERT_TAILSCALE_API_KEY_HERE\"/TAILSCALE_API_KEY=\"'$TAILSCALE_API_KEY'\"/g' ./client_config.sh
 	sed -i 's/TAILNET=\"INSERT_TAILNET_HERE\"/TAILNET=\"'$TAILNET'\"/g' ./client_config.sh
