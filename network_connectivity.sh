@@ -37,9 +37,12 @@ get_dns() {
 
 # Tailscale connectivity
 get_tailscale() {
-		for i in `tailscale status | awk '{print $2}'`; do 
+		echo "Pinging all online tailscale host"
+		for i in `tailscale status | grep -v offline | awk '{print $2}'`; do 
 			tailscale ping --c 1 $i
 		done 
+		echo "Perform tailscale netcheck"
+		tailscale netcheck
 }
 # Main script execution
 echo "=== Network Information ==="
@@ -76,3 +79,7 @@ else
 fi
 
 echo
+
+echo "=== Tailscale Information ==="
+get_tailscale
+
