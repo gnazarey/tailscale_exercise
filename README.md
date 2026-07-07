@@ -2,7 +2,7 @@
 
 ## Overview
 
-I will be demonstrating Tailscale's ability to establish a unified network mesh connecting multiple client nodes back to a central server. Each participating machine is deliberately located in separate, distinct data centers. This multi-datacenter setup models real-world complex environments, such as hybrid cloud deployments or global enterprise architectures that require secure connectivity across varied jurisdictional boundaries and disparate cloud providers.
+I will be demonstrating Tailscale's ability to establish a unified network connecting multiple client nodes back to a central server. Each participating machine is deliberately located in separate, distinct data centers. This multi-datacenter setup models real-world complex environments, such as hybrid cloud deployments or global enterprise architectures that require secure connectivity across varied jurisdictional boundaries and disparate cloud providers.
 
 ## Why This Use Case?
 
